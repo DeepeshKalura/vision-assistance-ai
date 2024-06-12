@@ -45,3 +45,6 @@ app.*.map.json
 
 # for learning new thing and concepts for building successful project
 learn
+
+# for firebase
+google-services.json
