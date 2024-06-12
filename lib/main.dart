@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+import 'firebase_options.dart';
+import './presentation/homescreen.dart';
+import './feature/authentication.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -10,57 +20,49 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Homescreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          
+          if(snapshot.hasError) {
+            return const Text("Something went wrong");
+          }
+          else if(snapshot.hasData) {
+            return const HomeScreen();
+          }
+          else{
+            return const SignInScreen();
+          }    
+
+        }
+      ),
     );
   }
 }
 
-class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
 
-  @override
-  State<Homescreen> createState() => _HomescreenState();
-}
 
-class _HomescreenState extends State<Homescreen> {
-  int counter = 0;
+class SignInScreen extends StatelessWidget {
+  const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authentication = Authentication();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Counter Application",
+          "SignIn Application",
         ),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-            child: Text(
-              counter.toString(),
-              style: const TextStyle(
-                fontSize: 32,
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("Increment"),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("Decrement"),
-              ),
-            ],
+          ElevatedButton(
+            onPressed: () async {
+              await authentication.signInWithGoogle();
+            },
+            child: const Text("Sign In"),
           ),
         ],
       ),
