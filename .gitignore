@@ -48,3 +48,4 @@ learn
 
 # for firebase
 google-services.json
+firebase_options.dart
