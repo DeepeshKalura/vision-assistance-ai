@@ -6,6 +6,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 class Authentication {
   final _auth = FirebaseAuth.instance;
 
+  Future<void> signInWithEmail(String email, String password) async {
+    _auth.signInWithEmailAndPassword(email: email, password: password);
+  }
+
   Future<void> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
