@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/feature/authentication.dart';
+
+import '/service/firebase/authentication.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
