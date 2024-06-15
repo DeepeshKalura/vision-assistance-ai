@@ -5,7 +5,6 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final authentication = Authentication();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
