@@ -8,4 +8,7 @@ final class AuthLoading extends AuthenticationState {}
 
 final class AuthSuccess extends AuthenticationState {}
 
-final class AuthFailure extends AuthenticationState {}
+final class AuthFailure extends AuthenticationState {
+  final String message;
+  AuthFailure(this.message);
+}
