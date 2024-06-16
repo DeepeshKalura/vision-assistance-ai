@@ -3,11 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/core/app_routes.dart';
 
-
 import 'bloc/authentication/authentication_bloc.dart';
 import 'bloc/bloc_observation.dart';
 import 'firebase_options.dart';
-
 
 Future<void> main() async {
   Bloc.observer = BlocObservationLogger();
@@ -23,8 +21,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthenticationBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthenticationBloc(),
+        ),
+      ],
       child: MaterialApp.router(
         routerConfig: AppRoutes.router,
         theme: ThemeData(
