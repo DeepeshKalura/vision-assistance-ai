@@ -40,7 +40,9 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _nextScreen() {
-    context.pushReplacementNamed(AppUrl.signInScreen);
+    context.pushReplacementNamed(
+      AppUrl.aboutUsScreen,
+    );
   }
 
   @override
