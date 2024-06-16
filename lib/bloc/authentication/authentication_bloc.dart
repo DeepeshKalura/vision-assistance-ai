@@ -19,23 +19,24 @@ class AuthenticationBloc
 
     try {
       final authentication = Authentication();
-      authentication.signInWithGoogle();
-      if (authentication.isAuthenticate()) {
+      await authentication.signInWithGoogle();
+      if (await authentication.isAuthenticate()) {
         emit(AuthSuccess());
+      } else {
+        emit(AuthFailure("Something went wrong from developer"));
       }
-      emit(AuthFailure("Something went wrong from developer"));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }
   }
 
   void _signOut(
-      SignnOutButtonPressed event, Emitter<AuthenticationState> emit) {
+      SignnOutButtonPressed event, Emitter<AuthenticationState> emit) async {
     emit(AuthLoading());
     try {
       final authentication = Authentication();
       authentication.signOut();
-      if (!authentication.isAuthenticate()) {
+      if (await authentication.isAuthenticate()) {
         emit(AuthInitial());
       } else {
         emit(AuthFailure("Why it still have current user?"));
