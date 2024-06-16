@@ -29,7 +29,9 @@ class Authentication {
     await _auth.signOut();
   }
 
-  bool isAuthenticate() {
-    return _auth.currentUser == null ? false : true;
+  Future<bool> isAuthenticate() async {
+    final user = _auth.userChanges();
+    final isUser = await user.isEmpty;
+    return !isUser;
   }
 }
